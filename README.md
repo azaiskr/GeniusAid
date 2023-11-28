@@ -2,7 +2,7 @@
 [CH2-PS230] Bangkit Academy 2023 Batch 2 Product Capstone
 
 ## ❗Please Note
-- Please always use branch for your work, DO NOT PUSH DIRECTLY TO MASTER!
+- Please always use ```branch``` for your work, DO NOT PUSH DIRECTLY TO MASTER!
 - Use clear commit messages and/or descriptions when pushing.
 - The commit message can follow the format ```author_category_name```.
     - Example ```johnDoe_addScreen_favouriteMovies```
