@@ -43,24 +43,16 @@ fun TopBar(modifier: Modifier) {
                 .size(70.dp)
                 .padding(10.dp, 10.dp, 10.dp, 10.dp),
         )
-        Column (modifier){
-            Text(
-                text = "Aplikasi",
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 20.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
 
-            Text(
-                text = "Genius aid",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+        Text(
+            text = "Genius aid",
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
 
-        }
+
 
     }
     Row (
@@ -69,11 +61,11 @@ fun TopBar(modifier: Modifier) {
             .padding(16.dp),
         horizontalArrangement = Arrangement.End
     ){
-        Icon(
-            imageVector = Icons.Default.Menu,
-            contentDescription = null,
-            modifier.size(30.dp)
-        )
+    Icon(
+        imageVector = Icons.Default.Menu,
+        contentDescription = null,
+        modifier.size(30.dp)
+    )
 
     }
 

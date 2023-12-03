@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,8 +41,11 @@ fun ComponentListBansosProcess(
     listBansosProcess: ListBansosProcess
 ) {
     Column(
-        modifier = modifier.padding(8.dp)
-            .background(color = Color.LightGray, shape = RoundedCornerShape(5.dp) )
+        modifier = modifier.padding(4.dp)
+            .background(
+                color = colorResource(id = R.color.whiteBlue),
+                shape = RoundedCornerShape(5.dp)
+            )
     ){
         Image(
             painter = painterResource(id = listBansosProcess.image),
@@ -57,7 +61,8 @@ fun ComponentListBansosProcess(
             fontSize = 20.sp,
             textAlign = TextAlign.End,
             modifier = modifier
-                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp)
+                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp),
+            color = colorResource(id = R.color.fontblue)
         )
         Text(
             text = listBansosProcess.status,
@@ -65,7 +70,8 @@ fun ComponentListBansosProcess(
             fontSize = 17.sp,
             textAlign = TextAlign.Start,
             modifier = modifier
-                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp)
+                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp),
+            color = colorResource(id = R.color.fontblue)
         )
         Text(
             text = listBansosProcess.statusNilai,
@@ -73,7 +79,8 @@ fun ComponentListBansosProcess(
             fontSize = 15.sp,
             textAlign = TextAlign.Start,
             modifier = modifier
-                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp)
+                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp),
+            color = colorResource(id = R.color.black)
         )
         Text(
             text = listBansosProcess.keterangan,
@@ -81,7 +88,8 @@ fun ComponentListBansosProcess(
             fontSize = 15.sp,
             textAlign = TextAlign.Start,
             modifier = modifier
-                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp)
+                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp),
+            color = colorResource(id = R.color.fontblue)
         )
         Text(
             text = listBansosProcess.keteranganNilai,
@@ -89,7 +97,8 @@ fun ComponentListBansosProcess(
             fontSize = 15.sp,
             textAlign = TextAlign.Start,
             modifier = modifier
-                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp)
+                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp),
+            color = colorResource(id = R.color.black)
         )
         Text(
             text = listBansosProcess.priode,
@@ -97,7 +106,8 @@ fun ComponentListBansosProcess(
             fontSize = 15.sp,
             textAlign = TextAlign.Start,
             modifier = modifier
-                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp)
+                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp),
+            color = colorResource(id = R.color.fontblue)
         )
         Text(
             text = listBansosProcess.priodeNilai,
@@ -105,7 +115,8 @@ fun ComponentListBansosProcess(
             fontSize = 15.sp,
             textAlign = TextAlign.Start,
             modifier = modifier
-                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp)
+                .padding(start = 4.dp, bottom = 8.dp, end = 16.dp),
+            color = colorResource(id = R.color.black)
         )
 
     }
