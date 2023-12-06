@@ -11,12 +11,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
@@ -31,18 +41,18 @@ import com.bangkit.geniusaidapp.R
 import com.bangkit.geniusaidapp.ui.component.BtnCekBansos
 import com.bangkit.geniusaidapp.ui.component.MainListBansosProcess
 import com.bangkit.geniusaidapp.ui.theme.GeniusAidAppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun ContentHome(navController: NavHostController) {
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .fillMaxWidth()
-                .padding(8.dp),
+                .fillMaxSize()
+                .background(color = colorResource(id = R.color.whiteBlueLight)),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -53,7 +63,8 @@ fun ContentHome(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                textAlign = TextAlign.End
+                textAlign = TextAlign.End,
+                color = colorResource(id = R.color.black)
             )
             Text(
                 text = "Profile Bantuan Sosial",
@@ -72,7 +83,8 @@ fun ContentHome(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                color = colorResource(id = R.color.black)
             )
             MainListBansosProcess()
             Row (
@@ -150,3 +162,45 @@ fun MenuPrev() {
     }
     
 }
+
+
+//@Composable
+//fun ModalBottomSheet(onDismissRequest: () -> Unit, content: () -> Unit) {
+//    val sheetState = rememberModalBottomSheetState()
+//    val scope = rememberCoroutineScope()
+//    var showBottomSheet by remember { mutableStateOf(false) }
+//    Scaffold(
+//        floatingActionButton = {
+//            ExtendedFloatingActionButton(
+//                text = { Text("Show bottom sheet") },
+//                icon = { Icon(Icons.Filled.Add, contentDescription = "") },
+//                onClick = {
+//                    showBottomSheet = true
+//                }
+//            )
+//        }
+//    ) { contentPadding ->
+//        // Screen content
+//
+//        if (showBottomSheet) {
+//            ModalBottomSheet(
+//                onDismissRequest = {
+//                    showBottomSheet = false
+//                },
+//                sheetState = sheetState
+//            ) {
+//                // Sheet content
+//                Button(onClick = {
+//                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+//                        if (!sheetState.isVisible) {
+//                            showBottomSheet = false
+//                        }
+//                    }
+//                }) {
+//                    Text("Hide bottom sheet")
+//                }
+//            }
+//        }
+//    }
+//
+//}

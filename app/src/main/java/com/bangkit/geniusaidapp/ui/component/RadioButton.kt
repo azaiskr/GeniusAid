@@ -1,6 +1,7 @@
 package com.bangkit.geniusaidapp.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,12 +12,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,8 +30,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -376,9 +385,12 @@ fun Ask8() {
     }
 
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Ask9() {
-    var selectedOption by remember { mutableStateOf("Option 1") }
+    var number by remember { mutableStateOf("") }
 
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
@@ -400,26 +412,38 @@ fun Ask9() {
                 color = colorResource(id = R.color.fontblue),
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 17.sp,
+                modifier = Modifier.padding(bottom = 4.dp)
             )
-            RadioGroup(
-                options = listOf(
-                    "1 ruangan",
-                    "Kurang dari 5 ruangan",
-                    "Kurang dari 10 ruangan",
-                    "Kurang dari 20 ruangan",
-                    "Lebih dari 20 ruangan",
+
+            TextField(
+                value = number,
+                onValueChange = { number= it },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
                 ),
-                selectedOption = selectedOption,
-                onOptionSelected = { option ->
-                    selectedOption = option
-                }
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    containerColor = Color.Transparent
+                ),
+                singleLine = true,
+                placeholder = {
+                    Text(text = "Continue")
+                },
+
+                modifier = Modifier
+                    .padding(12.dp)
+//                    .background(color = colorResource(id = R.color.whiteBlue))
+
             )
         }
 
     }
 
-
 }
+
+
+
+
 @Composable
 fun Ask10() {
     var selectedOption by remember { mutableStateOf("Option 1") }
@@ -552,6 +576,10 @@ fun Ask12() {
 
 
 
+
+
+
+
 @Composable
 fun RadioGroup(
     options: List<String>,
@@ -573,6 +601,8 @@ fun RadioGroup(
                 Text(text = option,
                     color = colorResource(id = R.color.black),
                     fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .clickable(onClick = {onOptionSelected(option)}),
                     fontSize = 14.sp)
             }
         }

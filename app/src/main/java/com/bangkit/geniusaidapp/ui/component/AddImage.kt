@@ -33,10 +33,18 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Objects
 
+
+@Composable
+fun AddImage() {
+    Column {
+        imageCaptureFromCamera()
+
+    }
+}
+
 @Composable
 fun imageCaptureFromCamera()
 {
-
     val context = LocalContext.current
     val file = context.createImageFile()
     val uri = FileProvider.getUriForFile(
@@ -44,7 +52,9 @@ fun imageCaptureFromCamera()
         context.packageName + ".provider", file
     )
 
-    var capturedImageUri by remember { mutableStateOf<Uri>(Uri.EMPTY) }
+    var capturedImageUri by remember {
+        mutableStateOf<Uri>(Uri.EMPTY)
+    }
 
 
     val cameraLauncher =

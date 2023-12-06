@@ -14,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -25,7 +26,8 @@ fun BtnBpnt(navController: NavHostController) {
         onClick = {navController.navigate("pengajuan/{Id}")
         },
         contentPadding = PaddingValues(20.dp, 12.dp, 20.dp, 12.dp),
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.navy))
     ) {
         Text(text = "BPNT")
 
@@ -37,7 +39,8 @@ fun BtnPkh(navController: NavHostController) {
         onClick = {navController.navigate("pengajuan/{Id}")
         },
         contentPadding = PaddingValues(20.dp, 12.dp, 20.dp, 12.dp),
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.navy))
     ) {
         Text(text = "PKH")
 
@@ -50,7 +53,8 @@ fun BtnPbiJk(navController: NavHostController) {
         onClick = {navController.navigate("pengajuan/{Id}")
         },
         contentPadding = PaddingValues(20.dp, 12.dp, 20.dp, 12.dp),
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.navy))
     ) {
         Text(text = "PBI-JK")
 
