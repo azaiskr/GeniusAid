@@ -16,6 +16,7 @@ import com.bangkit.geniusaidapp.ui.component.BottomBar
 import com.bangkit.geniusaidapp.ui.component.TopBar
 import com.bangkit.geniusaidapp.ui.component.imageCaptureFromCamera
 import com.bangkit.geniusaidapp.ui.screen.cekbansos.ContentCekBansos
+import com.bangkit.geniusaidapp.ui.screen.cekbansos.ContentHasilCekBansos
 import com.bangkit.geniusaidapp.ui.screen.home.ContentHome
 import com.bangkit.geniusaidapp.ui.screen.login.LoginUserPage
 import com.bangkit.geniusaidapp.ui.screen.pengajuan.AskPengajuan
@@ -32,12 +33,14 @@ fun GeniusAidApp(
     val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
         topBar = {
-            if (currentRoute != Screen.CekBansos.route && currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.LoginUser.route) {
+            if (currentRoute != Screen.CekBansos.route && currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.LoginUser.route
+                && currentRoute != Screen.HasilCekBansos.route) {
                 TopBar(modifier = Modifier, navController)
             }
         },
         bottomBar = {
-            if (currentRoute != Screen.CekBansos.route && currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.LoginUser.route) {
+            if (currentRoute != Screen.CekBansos.route && currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.LoginUser.route
+                && currentRoute != Screen.HasilCekBansos.route ) {
                 BottomBar(navController)
             }
         },
@@ -58,7 +61,11 @@ fun GeniusAidApp(
 
             }
             composable(Screen.CekBansos.route) {
-                ContentCekBansos()
+                ContentCekBansos(navController)
+
+            }
+            composable(Screen.HasilCekBansos.route) {
+                ContentHasilCekBansos()
 
             }
             composable(Screen.Pengajuan.route) {

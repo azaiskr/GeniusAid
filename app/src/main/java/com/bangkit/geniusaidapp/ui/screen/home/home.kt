@@ -51,7 +51,7 @@ fun ContentHome(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .fillMaxSize()
+                .fillMaxSize().padding(8.dp)
                 .background(color = colorResource(id = R.color.whiteBlueLight)),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally

@@ -1,6 +1,5 @@
 package com.bangkit.geniusaidapp.ui.component
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,13 +11,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material.icons.outlined.ExitToApp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,31 +28,79 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import com.bangkit.geniusaidapp.R
-
-
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.painterResource
 
 @Composable
-fun ImageProfile() {
-    Surface(
-        modifier = Modifier
-            .size(154.dp)
-            .padding(5.dp),
-        shape = CircleShape,
-        border = BorderStroke(0.5.dp, Color.LightGray)
-    ) {
-        AsyncImage(
-            model = "https://scontent.fupg6-1.fna.fbcdn.net/v/t39.30808-6/294175906_1661555460870347_816313342043149933_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeE8FrUsc9B4eYhoXC-okj1GOTbC20WGfrY5NsLbRYZ-tlfOfqzEcE0btQC-_GlVsruq7HnSXA6PGpwdx19YSL9b&_nc_ohc=yjNfiCx8LmkAX-shWoE&_nc_ht=scontent.fupg6-1.fna&oh=00_AfB98HnJ1H1dGeHpgVA5uuxYGsQ3DMH6qYuMAD_cieXVTg&oe=6559DC71",
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
+fun ImageAdd() {
+    Box {
+
+        val img: Bitmap = BitmapFactory.decodeResource(Resources.getSystem(), android.R.drawable.ic_menu_report_image)
+        val bitmap = remember {
+            mutableStateOf(img)
+        }
+        val launcherr = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.TakePicturePreview())
+        {
+            if (it != null) {
+                bitmap.value = it
+            }
+        }
+        Column (
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(8.dp)
-                .size(100.dp)
-                .clip(CircleShape)
-        )
+                .fillMaxSize()
+        ){
+            Image(
+                bitmap = bitmap.value.asImageBitmap(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(150.dp)
+                    .background(Color.Gray)
+                    .border(
+                        width = 1.dp,
+                        color = Color.White,
+                        shape = CircleShape
+                    )
+            )
+
+        }
+
+        Box (
+            modifier = Modifier
+                .padding(top = 100.dp, start = 200.dp)
+        ){
+            Image(
+                painter = painterResource(id = R.drawable.baseline_photo_camera_24),
+                contentDescription = null,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(Color.Black)
+                    .padding(10.dp)
+                    .size(20.dp)
+                    .clickable { launcherr.launch() }
+            )
+
+        }
     }
 }
+
 
 @Composable
 fun Info(

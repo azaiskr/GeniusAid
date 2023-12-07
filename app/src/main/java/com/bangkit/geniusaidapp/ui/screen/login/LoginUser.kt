@@ -144,14 +144,8 @@ fun LoginUserPage(navController: NavHostController) {
                     text = "Submit",
                     color = colorResource(id = R.color.whiteBlue)
                 )
-
             }
-
-
         }
-
-
-
     }
     
 }

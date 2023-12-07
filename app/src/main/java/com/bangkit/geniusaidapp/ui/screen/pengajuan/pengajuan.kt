@@ -32,9 +32,11 @@ import com.bangkit.geniusaidapp.ui.component.Ask6
 import com.bangkit.geniusaidapp.ui.component.Ask7
 import com.bangkit.geniusaidapp.ui.component.Ask8
 import com.bangkit.geniusaidapp.ui.component.Ask9
+import com.bangkit.geniusaidapp.ui.component.AskImage
 import com.bangkit.geniusaidapp.ui.component.BtnBpnt
 import com.bangkit.geniusaidapp.ui.component.BtnPbiJk
 import com.bangkit.geniusaidapp.ui.component.BtnPkh
+import com.bangkit.geniusaidapp.ui.component.BtnSubmitTaks
 import com.bangkit.geniusaidapp.ui.component.ItemPengajuan
 import com.bangkit.geniusaidapp.ui.component.imageCaptureFromCamera
 
@@ -45,7 +47,7 @@ fun ContentPengajuan(navController: NavHostController) {
     Column (
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .fillMaxSize()
+            .fillMaxSize().padding(8.dp)
             .background(color = colorResource(id = R.color.whiteBlueLight)),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -73,7 +75,8 @@ fun AskPengajuan(navController: NavHostController) {
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
-                .background(color = colorResource(id = R.color.whiteBlueLight)),
+                .background(color = colorResource(id = R.color.whiteBlueLight))
+                .padding(5.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
@@ -101,7 +104,8 @@ fun AskPengajuan(navController: NavHostController) {
             Ask10()
             Ask11()
             Ask12()
-            AddImage()
+            AskImage()
+            BtnSubmitTaks(navController = navController)
         }
 
     }
