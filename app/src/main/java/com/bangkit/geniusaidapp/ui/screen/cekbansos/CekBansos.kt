@@ -3,16 +3,22 @@ package com.bangkit.geniusaidapp.ui.screen.cekbansos
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -51,18 +58,35 @@ fun ContentCekBansos(navController: NavHostController) {
     var namaKtp = remember { mutableStateOf("") }
 
 
-    Column(
-        modifier = Modifier.fillMaxWidth().background(color = colorResource(id = R.color.white)),
-    ){
+    Column{
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            IconButton(onClick = { navController.navigate("home")} ) {
+                Icon(
+                    imageVector = Icons.Outlined.KeyboardArrowLeft,
+                    contentDescription = null,
+                    Modifier
+                        .size(40.dp)
+                        .padding(top = 14.dp)
+                )
+
+            }
+            Text(
+                text = "Cek Bansos",
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(top = 14.dp)
+            )
+
+        }
 
 
-        Text(
-            text = "Cek Bansos",
-            fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
-            modifier = Modifier
-                .padding(16.dp, 16.dp, 16.dp, 8.dp)
-        )
 
         Column (
             modifier = Modifier
@@ -202,7 +226,8 @@ fun ContentCekBansos(navController: NavHostController) {
 
                 Button(
                     onClick = {navController.navigate("hasilcekbansos")},
-                    Modifier.fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth()
                         .padding(top = 8.dp, bottom = 20.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.navy)),
 

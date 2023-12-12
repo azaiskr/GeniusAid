@@ -2,6 +2,9 @@ package com.bangkit.geniusaidapp.navigation
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
+    object DetailProfileBansos : Screen("home/{bansosId}") {
+        fun createRoute(bansosId: Long) = "home/$bansosId"
+    }
     object Pengajuan : Screen("pengajuan")
     object Profile : Screen("profile")
     object LoginUser : Screen("loginuser")
@@ -24,5 +27,7 @@ sealed class Screen(val route: String) {
 //    object DetailCrew : Screen("home/{crewId}") {
 //        fun createRoute(crewId: Long) = "home/$crewId"
 //    }
+
+
 
 }

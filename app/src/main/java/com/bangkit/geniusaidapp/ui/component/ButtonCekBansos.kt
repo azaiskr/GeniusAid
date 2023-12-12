@@ -23,7 +23,7 @@ import com.bangkit.geniusaidapp.ui.theme.GeniusAidAppTheme
 @Composable
 fun BtnCekBansos(navController: NavHostController) {
     Button(
-        onClick = {navController.navigate("cekbansos") },
+        onClick = {navController.navigate("hasilcekbansos") },
         contentPadding = PaddingValues(20.dp, 12.dp, 20.dp, 12.dp),
         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.navy)),
     ) {
