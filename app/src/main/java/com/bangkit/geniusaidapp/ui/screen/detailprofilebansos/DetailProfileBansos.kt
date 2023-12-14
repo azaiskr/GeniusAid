@@ -1,7 +1,7 @@
 package com.bangkit.geniusaidapp.ui.screen.detailprofilebansos
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -34,10 +33,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.bangkit.geniusaidapp.R
 import com.bangkit.geniusaidapp.data.di.Injection
 import com.bangkit.geniusaidapp.model.ProfileBansos
-import com.bangkit.geniusaidapp.navigation.Screen
 import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
 import com.bangkit.geniusaidapp.ui.screen.Result
 
@@ -45,9 +42,10 @@ import com.bangkit.geniusaidapp.ui.screen.Result
 @Composable
 fun DetailProfileBansos(
     Id: Long,
+    context: Context,
     viewModel: DetailBansosViewModel = viewModel(
         factory = ViewModelFactory(
-            Injection.provideRepository()
+            Injection.provideRepository(context)
         )
     ),
     navController: NavHostController

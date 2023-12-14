@@ -1,16 +1,13 @@
 package com.bangkit.geniusaidapp.ui.screen.home
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,12 +28,14 @@ import com.bangkit.geniusaidapp.ui.component.BtnCekBansos
 import com.bangkit.geniusaidapp.ui.component.MainListProfileBansos
 import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
 import com.bangkit.geniusaidapp.ui.screen.Result
+//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 
 @Composable
 fun Home(
+    context: Context,
     viewModel: HomeViewModel = viewModel(
-        factory = ViewModelFactory(Injection.provideRepository()),
+        factory = ViewModelFactory(Injection.provideRepository(context = context )),
     ),
     navController: NavHostController,
     navigateToDetailProfileBansos: (Long) -> Unit,

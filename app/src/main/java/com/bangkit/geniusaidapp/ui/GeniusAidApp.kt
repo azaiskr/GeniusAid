@@ -1,12 +1,14 @@
 package com.bangkit.geniusaidapp.ui
 
 
+import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -31,13 +33,14 @@ import com.bangkit.geniusaidapp.ui.screen.profile.ContentProfile
 @Composable
 fun GeniusAidApp(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val context = LocalContext.current
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.CekBansos.route && currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.LoginUser.route
+            if (currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.LoginUser.route
                 && currentRoute != Screen.HasilCekBansos.route && currentRoute != Screen.DetailProfileBansos.route ) {
                 BottomBar(navController)
             }
@@ -58,7 +61,8 @@ fun GeniusAidApp(
                     navigateToDetailProfileBansos = { animalId ->
                         navController.navigate(Screen.DetailProfileBansos.createRoute(animalId))
                     },
-                    navController = navController
+                    navController = navController,
+                    context = context
 
                 )
 
@@ -72,11 +76,7 @@ fun GeniusAidApp(
             ) {
                 val id = it.arguments?.getLong("bansosId") ?: -1L
 
-                DetailProfileBansos(Id = id, navController = navController)
-            }
-            composable(Screen.CekBansos.route) {
-                ContentCekBansos(navController)
-
+                DetailProfileBansos(Id = id, navController = navController, context = context)
             }
             composable(Screen.HasilCekBansos.route) {
                 ContentHasilCekBansos(navController)

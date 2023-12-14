@@ -1,5 +1,6 @@
 package com.bangkit.geniusaidapp
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,9 +16,12 @@ import com.bangkit.geniusaidapp.ui.GeniusAidApp
 import com.bangkit.geniusaidapp.ui.theme.GeniusAidAppTheme
 
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
+        setContent (){
+
             GeniusAidAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -31,10 +35,3 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    GeniusAidAppTheme {
-        GeniusAidApp()
-    }
-}

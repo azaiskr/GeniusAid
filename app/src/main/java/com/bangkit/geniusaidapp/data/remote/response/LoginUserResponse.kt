@@ -11,10 +11,10 @@ data class LoginUserResponse(
 	val message: String? = null
 )
 
-data class Resultt(
+data class LoginResult(
 
 	@field:SerializedName("payload")
-	val payload: Payload? = null,
+	val payload: String? = null,
 
 	@field:SerializedName("token")
 	val token: String? = null

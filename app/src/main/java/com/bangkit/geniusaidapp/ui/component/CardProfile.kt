@@ -224,7 +224,7 @@ fun Email(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                IconButton(onClick = { navController.navigate("cekbansos")} ) {
+                IconButton(onClick = { } ) {
                     Icon(
                         imageVector = Icons.Outlined.Edit,
                         contentDescription = null,
@@ -280,7 +280,7 @@ fun NoTlp(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                IconButton(onClick = { navController.navigate("cekbansos")} ) {
+                IconButton(onClick = { } ) {
                     Icon(
                         imageVector = Icons.Outlined.Edit,
                         contentDescription = null,

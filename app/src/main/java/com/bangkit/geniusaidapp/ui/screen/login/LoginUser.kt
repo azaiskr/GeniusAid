@@ -171,7 +171,7 @@ fun LoginUserPage(navController: NavHostController) {
                             modifier = Modifier.size(20.dp)
                         )
                     }
-                }
+                },
             )
             Spacer(modifier = Modifier.padding(20.dp))
 

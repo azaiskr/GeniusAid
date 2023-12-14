@@ -37,7 +37,7 @@ fun ContentHasilCekBansos(navController : NavHostController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            IconButton(onClick = { navController.navigate("cekbansos")} ) {
+            IconButton(onClick = { navController.navigate("home")} ) {
                 Icon(
                     imageVector = Icons.Outlined.KeyboardArrowLeft,
                     contentDescription = null,
