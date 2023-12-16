@@ -1,17 +1,19 @@
 package com.bangkit.geniusaidapp.ui.screen.login
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.app.Activity
+import android.app.DatePickerDialog
+import android.content.Context
+import android.content.Intent
+import android.widget.DatePicker
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -23,32 +25,83 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.bangkit.geniusaidapp.MainActivity
 import com.bangkit.geniusaidapp.R
-import com.bangkit.geniusaidapp.ui.theme.GeniusAidAppTheme
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+import com.bangkit.geniusaidapp.data.di.Injection
+import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
+import com.bangkit.geniusaidapp.ui.screen.home.HomeViewModel
+import com.bangkit.geniusaidapp.ui.utils.Utils
+
+
+//@Composable
+//fun LoginUser(
+//    context: Context,
+//    viewModel: LoginUserViewModel = viewModel(
+//        factory = ViewModelFactory(Injection.provideRepository(context = context )),
+//    ),
+//    navController: NavHostController,
+////    navigateToHome: (Long) -> Unit,
+//) {
+//    viewModel.result.collectAsState(initial = Result.Loading).value.let { uiState ->
+//        when (uiState) {
+//            is Result.Loading -> {
+//                viewModel.getLogin()
+//            }
+//
+//            is Result.Success -> {
+//                LoginUserPage(
+//                    uiState.data,
+////                    navigateToHome = navigateToHome,
+//                    navController = navController,
+//                    context = context,
+//                    viewModel = viewModel
+//                )
+//            }
+//
+//            is Result.Error -> {}
+//        }
+//    }
+//}
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginUserPage(navController: NavHostController) {
+fun LoginUserPage(
+//    item: List<Payload>,
+    navController: NavHostController,
+    context: Context,
+    viewModel: LoginUserViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository(context = context )),
+    )
 
+) {
+
+
+
+//    var text by remember { mutableStateOf(TextFieldValue()) }
+//    var isDatePickerVisible by remember { mutableStateOf(false) }
+
+    // Use the LocalContext to access the context within Compose
+    val context = LocalContext.current
+
+    val sharedPreferences = context.getSharedPreferences("login_status", Context.MODE_PRIVATE)
     var nik by remember { mutableStateOf("")}
     var namaIbu by remember { mutableStateOf("") }
     var ttl by remember { mutableStateOf("") }
@@ -96,18 +149,16 @@ fun LoginUserPage(navController: NavHostController) {
                 },
                 singleLine = true,
                 modifier = Modifier.fillMaxSize(8.8f),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next
                 ),
                 leadingIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.barcode_scanner),
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.barcode_scanner),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
+
                 }
                 
             )
@@ -128,18 +179,15 @@ fun LoginUserPage(navController: NavHostController) {
                 },
                 singleLine = true,
                 modifier = Modifier.fillMaxSize(8.8f),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Done
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next
                 ),
                 leadingIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.face_4),
-                            contentDescription = null,
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.face_4),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
                 }
 
             )
@@ -159,8 +207,7 @@ fun LoginUserPage(navController: NavHostController) {
                 },
                 singleLine = true,
                 modifier = Modifier.fillMaxSize(8.8f),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
+                keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Done
                 ),
                 leadingIcon = {
@@ -176,7 +223,17 @@ fun LoginUserPage(navController: NavHostController) {
             Spacer(modifier = Modifier.padding(20.dp))
 
             Button(
-                onClick = {navController.navigate("home")},
+                onClick = {
+//                nanti disini akan membuat pengecekan login
+//                    navController.navigate(Screen.Home.route)
+                    if(viewModel.isValidCredentials(nik, namaIbu, ttl)){
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        context.startActivity(intent)
+                        Utils.setLoginStatus(context, true)
+                        Toast.makeText(context,"berhasil", Toast.LENGTH_SHORT).show()
+                    }else  Toast.makeText(context,"gagal", Toast.LENGTH_SHORT).show()
+                },
                 Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp, bottom = 20.dp),
@@ -184,7 +241,7 @@ fun LoginUserPage(navController: NavHostController) {
 
             ) {
                 Text(
-                    text = "Submit",
+                    text = "Login",
                     color = colorResource(id = R.color.whiteBlue)
                 )
             }
@@ -193,3 +250,6 @@ fun LoginUserPage(navController: NavHostController) {
     }
     
 }
+
+
+

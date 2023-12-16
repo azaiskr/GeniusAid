@@ -7,6 +7,7 @@ import com.bangkit.geniusaidapp.ui.screen.cekbansos.CekBansosViewModel
 import com.bangkit.geniusaidapp.ui.screen.cekbansos.HasilCekBansosViewModel
 import com.bangkit.geniusaidapp.ui.screen.detailprofilebansos.DetailBansosViewModel
 import com.bangkit.geniusaidapp.ui.screen.home.HomeViewModel
+import com.bangkit.geniusaidapp.ui.screen.login.LoginUserViewModel
 import com.bangkit.geniusaidapp.ui.screen.profile.ProfileViewModel
 
 class ViewModelFactory(private val repository: GeniusRepository) : ViewModelProvider.NewInstanceFactory(){
@@ -17,7 +18,18 @@ class ViewModelFactory(private val repository: GeniusRepository) : ViewModelProv
             return HomeViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(DetailBansosViewModel::class.java)) {
             return DetailBansosViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(HasilCekBansosViewModel::class.java)) {
+            return HasilCekBansosViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(repository) as T
+        }else if (modelClass.isAssignableFrom(LoginUserViewModel::class.java)) {
+            return LoginUserViewModel(repository) as T
         }
+
+//        if (modelClass.isAssignableFrom(LoginUserViewModel::class.java)) {
+//            return LoginUserViewModel(repository) as T
+//        }
+
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
 

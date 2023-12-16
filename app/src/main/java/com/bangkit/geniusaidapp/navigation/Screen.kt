@@ -1,19 +1,28 @@
 package com.bangkit.geniusaidapp.navigation
 
 sealed class Screen(val route: String) {
+
+//    Main
     object Home : Screen("home")
     object DetailProfileBansos : Screen("home/{bansosId}") {
         fun createRoute(bansosId: Long) = "home/$bansosId"
     }
     object Pengajuan : Screen("pengajuan")
     object Profile : Screen("profile")
+
+//    Login
     object LoginUser : Screen("loginuser")
-//    object CekBansos : Screen("cekbansos") {
-//    }
 
-    object HasilCekBansos : Screen("hasilcekbansos") {
-    }
 
+
+
+
+
+
+
+
+
+    object HasilCekBansos : Screen("hasilcekbansos")
 
     object AskPengajuan : Screen("pengajuan/{Id}") {
         fun createRoute(Id: Long) = "pengajuan/$Id"

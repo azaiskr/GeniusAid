@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class LoginUserResponse(
 
 	@field:SerializedName("result")
-	val result: Result? = null,
+	val result: LoginResult? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null
@@ -14,7 +14,7 @@ data class LoginUserResponse(
 data class LoginResult(
 
 	@field:SerializedName("payload")
-	val payload: String? = null,
+	val payload: Payload?,
 
 	@field:SerializedName("token")
 	val token: String? = null
@@ -31,3 +31,36 @@ data class Payload(
 	@field:SerializedName("name")
 	val name: String? = null
 )
+
+
+//data class LoginUserResponse(
+//
+//	@field:SerializedName("result")
+//	val result: Result? = null,
+//
+//	@field:SerializedName("message")
+//	val message: String? = null
+//)
+//
+//data class LoginResult(
+//
+//	@field:SerializedName("payload")
+//	val payload: String? = null,
+//
+//	@field:SerializedName("token")
+//	val token: String? = null
+//)
+//
+//data class Payload(
+//
+//	@field:SerializedName("nik")
+//	val nik: String? = null,
+//
+//	@field:SerializedName("birth_date")
+//	val birthDate: String? = null,
+//
+//	@field:SerializedName("name")
+//	val name: String? = null
+//)
+
+
