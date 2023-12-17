@@ -36,9 +36,8 @@ import com.bangkit.geniusaidapp.ui.screen.profile.ContentProfile
 fun GeniusAidApp(
     context : Context,
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
-
-) {
+    navController: NavHostController = rememberNavController()
+){
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 

@@ -1,6 +1,8 @@
 package com.bangkit.geniusaidapp.ui.screen.home
 
 import android.content.Context
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -27,7 +30,7 @@ import com.bangkit.geniusaidapp.ui.component.BtnCekBansos
 import com.bangkit.geniusaidapp.ui.component.MainListProfileBansos
 import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
 import com.bangkit.geniusaidapp.ui.screen.Result
-//import kotlin.coroutines.jvm.internal.CompletedContinuation.context
+
 
 
 @Composable
@@ -76,16 +79,21 @@ fun ContentHome(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Hallo, Ahkam Putra",
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp),
-                textAlign = TextAlign.Center,
-                color = colorResource(id = R.color.black)
-            )
+            viewModel.UserResult.observeAsState().value?.let {
+                it.name?.let { it1 ->
+                    Text(
+                        text = it1,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 25.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp),
+                        textAlign = TextAlign.Center,
+                        color = colorResource(id = R.color.black)
+                    )
+                }
+            }
+            
             Text(
                 text = "Profile Bantuan Sosial",
                 fontWeight = FontWeight.Bold,
@@ -106,6 +114,8 @@ fun ContentHome(
                 textAlign = TextAlign.Start,
                 color = colorResource(id = R.color.black)
             )
+
+
 
 
 

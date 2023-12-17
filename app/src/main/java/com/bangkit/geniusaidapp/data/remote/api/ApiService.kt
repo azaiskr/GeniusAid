@@ -3,18 +3,25 @@ package com.bangkit.geniusaidapp.data.remote.api
 import com.bangkit.geniusaidapp.data.remote.response.LoginResult
 import com.bangkit.geniusaidapp.data.remote.response.LoginUserResponse
 import com.bangkit.geniusaidapp.data.remote.response.Payload
+import com.bangkit.geniusaidapp.data.remote.response.UserProfileResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
-    @FormUrlEncoded
     @POST("login/user")
     fun loginUser(
-        @Field("nik") nik: String,
-        @Field("mother_name") mother_name: String,
-        @Field("birth_date") birth_date: String
+        @Query("nik") nik: String,
+        @Query("mother_name") motherName: String,
+        @Query("birth_date") birthDate: String
     ): Call<LoginUserResponse>
+
+    @GET("user/profile")
+    fun getUserProfile(): Call<UserProfileResponse>
+
+
 
 }

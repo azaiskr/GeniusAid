@@ -16,7 +16,6 @@ val Context.dataStore by preferencesDataStore(name = "loginSession")
 class UserPreferences private constructor(private val dataStore: DataStore<Preferences>){
 
 
-
     private val gson = Gson()
     suspend fun saveUser(user: LoginResult) {
         val payloadJson = gson.toJson(user.payload)

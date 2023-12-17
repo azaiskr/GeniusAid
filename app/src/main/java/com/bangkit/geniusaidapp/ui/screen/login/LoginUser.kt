@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -26,6 +27,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -92,11 +94,6 @@ fun LoginUserPage(
     )
 
 ) {
-
-
-
-//    var text by remember { mutableStateOf(TextFieldValue()) }
-//    var isDatePickerVisible by remember { mutableStateOf(false) }
 
     // Use the LocalContext to access the context within Compose
     val context = LocalContext.current
@@ -226,13 +223,20 @@ fun LoginUserPage(
                 onClick = {
 //                nanti disini akan membuat pengecekan login
 //                    navController.navigate(Screen.Home.route)
-                    if(viewModel.isValidCredentials(nik, namaIbu, ttl)){
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        context.startActivity(intent)
-                        Utils.setLoginStatus(context, true)
-                        Toast.makeText(context,"berhasil", Toast.LENGTH_SHORT).show()
-                    }else  Toast.makeText(context,"gagal", Toast.LENGTH_SHORT).show()
+//                    if(viewModel.isValidCredentials(nik, namaIbu, ttl)){
+//                        val intent = Intent(context, MainActivity::class.java)
+//                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                        context.startActivity(intent)
+//                        Utils.setLoginStatus(context, true)
+//                        Toast.makeText(context,"berhasil", Toast.LENGTH_SHORT).show()
+//                    }else  Toast.makeText(context,"gagal", Toast.LENGTH_SHORT).show()
+
+                    if (viewModel.isValidCredentials(nik, namaIbu, ttl)) {
+                        Log.d("LoginDebug", "NIK: $nik, Mother Name: $namaIbu, Birth Date: $ttl")
+                        viewModel.login(nik, namaIbu, ttl)
+                    } else {
+                        Toast.makeText(context, "Data tidak valid", Toast.LENGTH_SHORT).show()
+                    }
                 },
                 Modifier
                     .fillMaxWidth()
@@ -244,6 +248,16 @@ fun LoginUserPage(
                     text = "Login",
                     color = colorResource(id = R.color.whiteBlue)
                 )
+            }
+            viewModel.loginUserResult.observeAsState().value?.let { loginResponse ->
+                if (loginResponse.result == null) {
+                    Toast.makeText(context, "Gagal login", Toast.LENGTH_SHORT).show()
+                } else {
+                    val intent = Intent(context, MainActivity::class.java)
+                    context.startActivity(intent)
+                    Utils.setLoginStatus(context, true)
+                    Toast.makeText(context, "Berhasil login", Toast.LENGTH_SHORT).show()
+                }
             }
 
         }

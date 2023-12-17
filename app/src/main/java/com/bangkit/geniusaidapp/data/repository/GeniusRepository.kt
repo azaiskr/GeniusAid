@@ -3,26 +3,26 @@ package com.bangkit.geniusaidapp.data.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bangkit.geniusaidapp.data.preference.UserModel
 import com.bangkit.geniusaidapp.data.preference.UserPreferences
 import com.bangkit.geniusaidapp.data.remote.api.ApiService
 import com.bangkit.geniusaidapp.data.remote.response.LoginResult
 import com.bangkit.geniusaidapp.data.remote.response.LoginUserResponse
 import com.bangkit.geniusaidapp.data.remote.response.Payload
 import com.bangkit.geniusaidapp.data.remote.response.Result
+import com.bangkit.geniusaidapp.data.remote.response.UserProfileResponse
 import com.bangkit.geniusaidapp.model.ListProfilBansos
 import com.bangkit.geniusaidapp.model.ProfileBansos
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import retrofit2.Call
-import retrofit2.Callback
+import kotlinx.coroutines.withContext
 
 class GeniusRepository (
     private val apiService: ApiService,
     private val userPreferences: UserPreferences
 ){
 
-    private val listCrew = mutableListOf<ProfileBansos>()
+    private val lisBansos = mutableListOf<ProfileBansos>()
     private val listLogin = mutableListOf<Payload>()
 
     private var _listUser = MutableLiveData<List<Result>>()
@@ -37,26 +37,40 @@ class GeniusRepository (
     var isLoading: LiveData<Boolean> = _isLoading
 
 
-    fun login(nik: String, mother_name: String, birth_date : String) {
-        _isLoading.value = true
-        val client = apiService.loginUser(nik, mother_name, birth_date)
-        client.enqueue(object : Callback<LoginUserResponse> {
-
-            override fun onResponse(
-                call: Call<LoginUserResponse>,
-                response: retrofit2.Response<LoginUserResponse>
-            ) {
+    suspend fun login(nik: String, motherName: String, birthDate: String): LoginUserResponse? {
+        return withContext(Dispatchers.IO) { // Jalankan di thread terpisah
+            try {
+                val response = apiService.loginUser(nik, motherName, birthDate).execute()
                 if (response.isSuccessful) {
-                    _isLoading.value = false
-                    _loginUserResult.value = response.body()
+                    response.body()
+                } else {
+                    null
                 }
+            } catch (e: Exception) {
+                Log.e("Repository", "Login error: ${e.message}")
+                null
             }
-            override fun onFailure(call: Call<LoginUserResponse>, t: Throwable) {
-                Log.e("Repository", "error: ${t.message}")
-            }
-
-        })
+        }
     }
+
+    suspend fun UserProfile(): UserProfileResponse? {
+        return withContext(Dispatchers.IO) { // Jalankan di thread terpisah
+            try {
+                val response = apiService.getUserProfile().execute()
+                if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                Log.e("Repository", "Login error: ${e.message}")
+                null
+            }
+        }
+    }
+
+
+
 
 
     suspend fun saveUser(user: LoginResult) {
@@ -66,8 +80,6 @@ class GeniusRepository (
     fun getUser(): Flow<LoginResult> {
         return userPreferences.getUser()
     }
-
-
 
     suspend fun logout() {
         userPreferences.logOut()
@@ -79,18 +91,18 @@ class GeniusRepository (
 
     init {
         ListProfilBansos.profilBansos.forEach {
-            listCrew.add(
+            lisBansos.add(
                 ProfileBansos(it.id, it.nameSigkat, it.name, it.description, it.photoUrl)
             )
         }
     }
 
     fun getAllProfilBansos(): Flow<List<ProfileBansos>> {
-        return flowOf(listCrew)
+        return flowOf(lisBansos)
     }
 
     fun getProfilBansosById(crewId: Long): ProfileBansos {
-        return listCrew.first {
+        return lisBansos.first {
             it.id == crewId
         }
     }
