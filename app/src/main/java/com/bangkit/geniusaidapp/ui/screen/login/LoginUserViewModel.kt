@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bangkit.geniusaidapp.data.remote.response.LoginResult
 import com.bangkit.geniusaidapp.data.remote.response.LoginUserResponse
 import com.bangkit.geniusaidapp.data.remote.response.Payload
 import com.bangkit.geniusaidapp.data.repository.GeniusRepository
@@ -17,27 +18,6 @@ class LoginUserViewModel(private val repository: GeniusRepository) : ViewModel()
     private var _loginUserResult = MutableLiveData<LoginUserResponse>()
     val loginUserResult: LiveData<LoginUserResponse> = _loginUserResult
 
-//    private val _result: MutableStateFlow<Result<List<Payload>>> =
-//        MutableStateFlow(Result.Loading)
-//    val result: StateFlow<Result<List<Payload>>>
-//        get() = _result
-
-
-
-//    fun getLogin() {
-//        viewModelScope.launch {
-//            repository.getLogin()
-//                .catch {
-//                    _result.value = Result.Error(it.message.toString())
-//                }
-//                .collect { login ->
-//                    _result.value = Result.Success(login)
-//                }
-//        }
-//    }
-//    suspend fun saveSession(user: LoginResult) {
-//        repository.saveUser(user)
-//    }
 
     fun isValidCredentials(nik: String, mother_name: String, birth_date : String): Boolean {
         val dateRegex = Regex("\\d{4}-\\d{2}-\\d{2}")
@@ -48,8 +28,18 @@ class LoginUserViewModel(private val repository: GeniusRepository) : ViewModel()
         viewModelScope.launch {
             repository.login(nik, motherName, birthDate).let { response ->
                 _loginUserResult.postValue(response)
+
+                response?.result?.let { saveUser(it) }
             }
         }
+    }
+
+    fun saveUser(user: LoginResult) {
+        viewModelScope.launch {
+
+            repository.saveUser(user)
+        }
+
     }
 
 }

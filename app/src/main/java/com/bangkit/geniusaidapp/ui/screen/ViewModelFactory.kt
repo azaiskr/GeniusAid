@@ -3,8 +3,7 @@ package com.bangkit.geniusaidapp.ui.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.geniusaidapp.data.repository.GeniusRepository
-import com.bangkit.geniusaidapp.ui.screen.cekbansos.CekBansosViewModel
-import com.bangkit.geniusaidapp.ui.screen.cekbansos.HasilCekBansosViewModel
+import com.bangkit.geniusaidapp.ui.screen.hasilstatusbansos.HasilStatusBansosViewModel
 import com.bangkit.geniusaidapp.ui.screen.detailprofilebansos.DetailBansosViewModel
 import com.bangkit.geniusaidapp.ui.screen.home.HomeViewModel
 import com.bangkit.geniusaidapp.ui.screen.login.LoginUserViewModel
@@ -18,8 +17,8 @@ class ViewModelFactory(private val repository: GeniusRepository) : ViewModelProv
             return HomeViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(DetailBansosViewModel::class.java)) {
             return DetailBansosViewModel(repository) as T
-        } else if (modelClass.isAssignableFrom(HasilCekBansosViewModel::class.java)) {
-            return HasilCekBansosViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(HasilStatusBansosViewModel::class.java)) {
+            return HasilStatusBansosViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(repository) as T
         }else if (modelClass.isAssignableFrom(LoginUserViewModel::class.java)) {

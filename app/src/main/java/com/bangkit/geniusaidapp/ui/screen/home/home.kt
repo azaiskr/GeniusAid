@@ -1,19 +1,20 @@
 package com.bangkit.geniusaidapp.ui.screen.home
 
 import android.content.Context
-import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -25,51 +26,24 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.bangkit.geniusaidapp.R
 import com.bangkit.geniusaidapp.data.di.Injection
-import com.bangkit.geniusaidapp.model.ProfileBansos
 import com.bangkit.geniusaidapp.ui.component.BtnCekBansos
-import com.bangkit.geniusaidapp.ui.component.MainListProfileBansos
+import com.bangkit.geniusaidapp.ui.component.ItemProfileBansos
 import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
-import com.bangkit.geniusaidapp.ui.screen.Result
 
-
-
-@Composable
-fun Home(
-    context: Context,
-    viewModel: HomeViewModel = viewModel(
-        factory = ViewModelFactory(Injection.provideRepository(context = context )),
-    ),
-    navController: NavHostController,
-    navigateToDetailProfileBansos: (Long) -> Unit,
-) {
-    viewModel.result.collectAsState(initial = Result.Loading).value.let { uiState ->
-        when (uiState) {
-            is Result.Loading -> {
-                viewModel.getAllProfilBansos()
-            }
-
-            is Result.Success -> {
-                ContentHome(
-                    uiState.data,
-                    navigateToDetailBansos = navigateToDetailProfileBansos,
-                    navController = navController,
-                    viewModel
-                )
-            }
-
-            is Result.Error -> {}
-        }
-    }
-}
 
 
 @Composable
 fun ContentHome(
-    listProfilBansos: List<ProfileBansos>,
-    navigateToDetailBansos: (Long) -> Unit,
+    context: Context,
+    navigateToDetailBansos: (String) -> Unit,
     navController: NavHostController,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository(context = context )),
+    )
+
 ) {
+    val groupedBansos by viewModel.groupedBansos.collectAsState()
+
     Box {
         Column(
             modifier = Modifier
@@ -79,10 +53,12 @@ fun ContentHome(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            viewModel.UserResult.observeAsState().value?.let {
-                it.name?.let { it1 ->
+            viewModel.getUserProfile()
+            viewModel.userProfile.value.let {
+
+                if (it != null) {
                     Text(
-                        text = it1,
+                        text ="Welcome " + it.result?.name ?: "",
                         fontWeight = FontWeight.Bold,
                         fontSize = 25.sp,
                         modifier = Modifier
@@ -93,7 +69,7 @@ fun ContentHome(
                     )
                 }
             }
-            
+
             Text(
                 text = "Profile Bantuan Sosial",
                 fontWeight = FontWeight.Bold,
@@ -116,23 +92,31 @@ fun ContentHome(
             )
 
 
+            LazyColumn(modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 5.dp, end = 5.dp)
+            ) {
+                groupedBansos.forEach { (init, data) ->
 
+                    items(data, key = { it.name }) { data ->
+                        ItemProfileBansos(
+                            name = data.name,
+                            photo = data.logoUrl,
+                            navigateToDetail = navigateToDetailBansos
+                        )
+                    }
 
+                }
+            }
 
-                BtnCekBansos(navController)
-
-
-
-
-
-
-            MainListProfileBansos(
-                listProfilBansos = listProfilBansos,
-                navigateToDetailBansos = navigateToDetailBansos
-            )
 
         }
+        Box (modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .padding(8.dp, 8.dp, 20.dp, 8.dp)){
 
+            BtnCekBansos(navController)
+        }
     }
 
 }

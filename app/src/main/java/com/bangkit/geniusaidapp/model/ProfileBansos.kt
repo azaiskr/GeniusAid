@@ -1,10 +1,11 @@
 package com.bangkit.geniusaidapp.model
 
 data class ProfileBansos(
-    val id: Long,
-    val nameSigkat : String,
+    val logoUrl: String,
     val name: String,
     val description: String,
-    val photoUrl: Int
+    val alias: String,
+    val totalPenerima: Int,
+    val totalPeriode: Int,
 )
 

@@ -40,13 +40,19 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
+import coil.compose.AsyncImage
+import com.bangkit.geniusaidapp.ui.screen.profile.ProfileViewModel
 
 @Composable
-fun ImageAdd() {
+fun ImageAdd(
+    viewModel : ProfileViewModel
+) {
     Box {
 
         val img: Bitmap = BitmapFactory.decodeResource(Resources.getSystem(), android.R.drawable.ic_menu_report_image)
@@ -60,25 +66,52 @@ fun ImageAdd() {
                 bitmap.value = it
             }
         }
+
+
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
         ){
-            Image(
-                bitmap = bitmap.value.asImageBitmap(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(150.dp)
-                    .background(Color.Gray)
-                    .border(
-                        width = 1.dp,
-                        color = Color.White,
-                        shape = CircleShape
+            viewModel.getUserProfile()
+            viewModel.userProfile.value.let {
+                if (it != null) {
+                    val profilePicUrl = viewModel.userProfile.value?.result?.profilePicUrl?.toString()
+                    AsyncImage(
+                        model = profilePicUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(150.dp)
+                            .background(Color.Gray)
+                            .border(
+                                width = 1.dp,
+                                color = Color.White,
+                                shape = CircleShape
+                            )
                     )
-            )
+
+
+                }else{
+                    Image(
+                        bitmap = bitmap.value.asImageBitmap(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(150.dp)
+                            .background(Color.Gray)
+                            .border(
+                                width = 1.dp,
+                                color = Color.White,
+                                shape = CircleShape
+                            )
+                    )
+                }
+            }
+
+
 
         }
 
@@ -104,7 +137,9 @@ fun ImageAdd() {
 
 @Composable
 fun Info(
-    modifier: Modifier = Modifier,  navController: NavHostController
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    viewModel : ProfileViewModel
 ) {
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
@@ -120,73 +155,89 @@ fun Info(
                 .padding(16.dp)
                 .fillMaxWidth()
         ) {
-            Text(
-                text = "Info",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = colorResource(id = R.color.navy),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = modifier.padding(bottom = 16.dp)
+            viewModel.getUserProfile()
+            viewModel.userProfile.value.let {
+                Text(
+                    text = "Info",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = colorResource(id = R.color.navy),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = modifier.padding(bottom = 16.dp)
 
-            )
+                )
 
-            Text(
-                text = "Kewarganegaraan",
-                color = colorResource(id = R.color.fontblue),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 17.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "Warga negara indonesia",
-                color = colorResource(id = R.color.black),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "Nama lengkap",
-                color = colorResource(id = R.color.fontblue),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 17.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "Ahkam Putra",
-                color = colorResource(id = R.color.black),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "Tanggal Lahir",
-                color = colorResource(id = R.color.fontblue),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 17.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "03/02/1992",
-                color = colorResource(id = R.color.black),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "NIK",
-                color = colorResource(id = R.color.fontblue),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 17.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
-            Text(
-                text = "7472787655360031",
-                color = colorResource(id = R.color.black),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
+                Text(
+                    text = "Kewarganegaraan",
+                    color = colorResource(id = R.color.fontblue),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 17.sp,
+                    modifier = modifier.padding(bottom = 8.dp)
+                )
+                if (it != null) {
+                    Text(
+                        text = it.result?.kewarganegaraan?: "",
+                        color = colorResource(id = R.color.black),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
+                        modifier = modifier.padding(bottom = 8.dp)
+                    )
+                }
+                Text(
+                    text = "Nama lengkap",
+                    color = colorResource(id = R.color.fontblue),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 17.sp,
+                    modifier = modifier.padding(bottom = 8.dp)
+                )
+
+                if (it != null) {
+                    Text(
+                        text = it.result?.name ?: "",
+                        color = colorResource(id = R.color.black),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
+                        modifier = modifier.padding(bottom = 8.dp)
+                    )
+                }
+
+                Text(
+                    text = "Tanggal Lahir",
+                    color = colorResource(id = R.color.fontblue),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 17.sp,
+                    modifier = modifier.padding(bottom = 8.dp)
+                )
+                if (it != null) {
+                    Text(
+                        text = it.result?.birthDate?: "",
+                        color = colorResource(id = R.color.black),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
+                        modifier = modifier.padding(bottom = 8.dp)
+                    )
+                }
+                Text(
+                    text = "NIK",
+                    color = colorResource(id = R.color.fontblue),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 17.sp,
+                    modifier = modifier.padding(bottom = 8.dp)
+                )
+                if (it != null) {
+                    Text(
+                        text = it.result?.nik?: "",
+                        color = colorResource(id = R.color.black),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
+                        modifier = modifier.padding(bottom = 8.dp)
+                    )
+                }
+
+            }
+
+
 
         }
     }
@@ -194,7 +245,7 @@ fun Info(
 
 @Composable
 fun Email(
-    modifier: Modifier = Modifier,  navController: NavHostController
+    modifier: Modifier = Modifier,  navController: NavHostController, viewModel : ProfileViewModel
 ) {
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
@@ -210,39 +261,47 @@ fun Email(
                 .padding(16.dp)
                 .fillMaxWidth()
         ) {
-            Row (
-                modifier = modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(
-                    text = "Email",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    color = colorResource(id = R.color.navy),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+            viewModel.getUserProfile()
+            viewModel.userProfile.value.let {
 
-                IconButton(onClick = { } ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Edit,
-                        contentDescription = null,
-                        modifier.size(20.dp),
-                        colorResource(id = R.color.black)
-
+                Row (
+                    modifier = modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ){
+                    Text(
+                        text = "Email",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        color = colorResource(id = R.color.navy),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
+                    IconButton(onClick = { } ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Edit,
+                            contentDescription = null,
+                            modifier.size(20.dp),
+                            colorResource(id = R.color.black)
+
+                        )
+
+                    }
+
+                }
+                if (it != null) {
+                    Text(
+                        text = it.result?.email?: "",
+                        color = colorResource(id = R.color.black),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
+                        modifier = modifier.padding(bottom = 8.dp)
+                    )
                 }
 
             }
-            Text(
-                text = "ahkanputra@gmail,com",
-                color = colorResource(id = R.color.black),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
+
 
         }
     }
@@ -250,7 +309,7 @@ fun Email(
 
 @Composable
 fun NoTlp(
-    modifier: Modifier = Modifier,  navController: NavHostController
+    modifier: Modifier = Modifier,  navController: NavHostController, viewModel : ProfileViewModel
 ) {
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
@@ -292,13 +351,20 @@ fun NoTlp(
                 }
 
             }
-            Text(
-                text = "+628235673787",
-                color = colorResource(id = R.color.black),
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
-                modifier = modifier.padding(bottom = 8.dp)
-            )
+
+            viewModel.getUserProfile()
+            viewModel.userProfile.value.let {
+                if (it != null) {
+                    Text(
+                        text = it.result?.phoneNumber?: "",
+                        color = colorResource(id = R.color.black),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
+                        modifier = modifier.padding(bottom = 8.dp)
+                    )
+                }
+            }
+
 
         }
     }

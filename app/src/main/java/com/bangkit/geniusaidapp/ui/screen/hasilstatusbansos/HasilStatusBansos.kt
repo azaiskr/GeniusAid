@@ -1,15 +1,13 @@
-package com.bangkit.geniusaidapp.ui.screen.cekbansos
+package com.bangkit.geniusaidapp.ui.screen.statusbansos
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowLeft
 import androidx.compose.material3.Icon
@@ -23,14 +21,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.bangkit.geniusaidapp.R
-import com.bangkit.geniusaidapp.navigation.Screen
-import com.bangkit.geniusaidapp.ui.component.ItemDataOrangDkk
+import com.bangkit.geniusaidapp.data.di.Injection
+import com.bangkit.geniusaidapp.ui.component.CardStatusUmur
 import com.bangkit.geniusaidapp.ui.component.ItemDataProfinsiDkk
+import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
+import com.bangkit.geniusaidapp.ui.screen.hasilstatusbansos.HasilStatusBansosViewModel
 
 @Composable
-fun ContentHasilCekBansos(navController : NavHostController) {
+fun ContentHasilStatusBansos(navController : NavHostController, context: Context) {
+    val viewModel: HasilStatusBansosViewModel = viewModel(
+        factory = ViewModelFactory(
+            Injection.provideRepository(context)
+        )
+    )
+
     Column {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -59,18 +66,16 @@ fun ContentHasilCekBansos(navController : NavHostController) {
         }
 
         Column {
-            ItemDataProfinsiDkk()
+            ItemDataProfinsiDkk(viewModel)
         }
         Column (
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .fillMaxSize()
                 .background(color = colorResource(id = R.color.whiteBlueLight))
                 .padding(5.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ItemDataOrangDkk()
+            CardStatusUmur(viewModel)
         }
     }
 

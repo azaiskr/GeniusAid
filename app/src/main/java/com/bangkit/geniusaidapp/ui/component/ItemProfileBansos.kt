@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,8 +30,10 @@ import com.bangkit.geniusaidapp.model.ProfileBansos
 
 @Composable
 fun ItemProfileBansos(
-    item: ProfileBansos,
-    modifier: Modifier = Modifier
+    name: String,
+    photo: String,
+    modifier: Modifier = Modifier,
+    navigateToDetail: (String) -> Unit
 ) {
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
@@ -43,6 +43,7 @@ fun ItemProfileBansos(
         modifier = modifier
             .padding(10.dp)
             .wrapContentSize()
+            .clickable { navigateToDetail(name) }
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(5.dp),
@@ -52,7 +53,7 @@ fun ItemProfileBansos(
                 .fillMaxWidth()
         ) {
             AsyncImage(
-                model = item.photoUrl,
+                model = photo,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -61,7 +62,7 @@ fun ItemProfileBansos(
                     .clip(CircleShape)
             )
             Text(
-                text = item.nameSigkat,
+                text = name,
                 fontWeight = FontWeight.Bold,
                 fontSize = 17.sp,
                 maxLines = 1,
@@ -73,23 +74,3 @@ fun ItemProfileBansos(
     }
 }
 
-@Composable
-fun MainListProfileBansos(
-    listProfilBansos: List<ProfileBansos>,
-    navigateToDetailBansos: (Long) -> Unit
-) {
-    LazyColumn(modifier = Modifier
-        .testTag("ListProfieBansos")
-        .fillMaxSize()
-        .padding(start = 5.dp, end = 5.dp)
-    ){
-        items(listProfilBansos){
-            ItemProfileBansos(item = it, modifier = Modifier.clickable{
-                navigateToDetailBansos(it.id)
-            })
-
-        }
-
-    }
-
-}

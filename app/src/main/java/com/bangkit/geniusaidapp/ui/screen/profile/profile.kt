@@ -74,10 +74,10 @@ fun ContentProfile(navHostController: NavHostController, context : Context){
             horizontalAlignment = Alignment.CenterHorizontally
         ){
 
-            ImageAdd()
-            Info(navController = navHostController)
-            Email(navController = navHostController)
-            NoTlp(navController = navHostController)
+            ImageAdd(viewModel)
+            Info(navController = navHostController, viewModel = viewModel)
+            Email(navController = navHostController, viewModel = viewModel)
+            NoTlp(navController = navHostController, viewModel = viewModel)
 
             Button(
                 onClick = {
@@ -86,7 +86,7 @@ fun ContentProfile(navHostController: NavHostController, context : Context){
                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
                     Utils.setLoginStatus(context, false)
-
+                    viewModel.logout()
 
                 },
                 Modifier

@@ -22,13 +22,12 @@ import androidx.navigation.navArgument
 import com.bangkit.geniusaidapp.AuthActivity
 import com.bangkit.geniusaidapp.navigation.Screen
 import com.bangkit.geniusaidapp.ui.component.BottomBar
-import com.bangkit.geniusaidapp.ui.screen.cekbansos.ContentHasilCekBansos
 import com.bangkit.geniusaidapp.ui.screen.detailprofilebansos.DetailProfileBansos
-import com.bangkit.geniusaidapp.ui.screen.home.Home
+import com.bangkit.geniusaidapp.ui.screen.home.ContentHome
 import com.bangkit.geniusaidapp.ui.screen.pengajuan.AskPengajuan
 import com.bangkit.geniusaidapp.ui.screen.pengajuan.ContentPengajuan
 import com.bangkit.geniusaidapp.ui.screen.profile.ContentProfile
-
+import com.bangkit.geniusaidapp.ui.screen.statusbansos.ContentHasilStatusBansos
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +53,7 @@ fun GeniusAidApp(
     } else {
         Scaffold(
             bottomBar = {
-                if (currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.HasilCekBansos.route
+                if (currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.HasilStatusBansos.route
                     && currentRoute != Screen.DetailProfileBansos.route ) {
                     BottomBar(navController)
                 }
@@ -68,13 +67,12 @@ fun GeniusAidApp(
             ) {
 
                 composable(Screen.Home.route) {
-                    Home(
-                        navigateToDetailProfileBansos = { animalId ->
-                            navController.navigate(Screen.DetailProfileBansos.createRoute(animalId))
+                    ContentHome(
+                        context = context,
+                        navigateToDetailBansos = { name ->
+                            navController.navigate(Screen.DetailProfileBansos.createRoute(name))
                         },
                         navController = navController,
-                        context = context
-
                     )
 
                 }
@@ -82,15 +80,15 @@ fun GeniusAidApp(
                 composable(
                     route = Screen.DetailProfileBansos.route,
                     arguments = listOf(
-                        navArgument("bansosId") { type = NavType.LongType }
+                        navArgument("name") { type = NavType.StringType }
                     )
                 ) {
-                    val id = it.arguments?.getLong("bansosId") ?: -1L
+                    val name = it.arguments?.getString("name") ?: ""
 
-                    DetailProfileBansos(Id = id, navController = navController, context = context)
+                    DetailProfileBansos(name = name, navController = navController, context = context)
                 }
-                composable(Screen.HasilCekBansos.route) {
-                    ContentHasilCekBansos(navController)
+                composable(Screen.HasilStatusBansos.route) {
+                    ContentHasilStatusBansos(navController, context)
 
                 }
                 composable(Screen.Pengajuan.route) {

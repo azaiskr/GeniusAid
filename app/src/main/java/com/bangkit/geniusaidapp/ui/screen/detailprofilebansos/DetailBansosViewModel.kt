@@ -18,10 +18,7 @@ class DetailBansosViewModel(
     val result: StateFlow<Result<ProfileBansos>>
         get() = _result
 
-    fun getProfileBansosById(animalId: Long) {
-        viewModelScope.launch {
-            _result.value = Result.Loading
-            _result.value = Result.Success(repository.getProfilBansosById(animalId))
-        }
+    suspend fun getBansosById(bansosName: String): List<ProfileBansos> {
+        return repository.getPrfileBansosName(bansosName)
     }
 }

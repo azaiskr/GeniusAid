@@ -19,7 +19,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,40 +42,56 @@ import com.bangkit.geniusaidapp.data.di.Injection
 import com.bangkit.geniusaidapp.model.ProfileBansos
 import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
 import com.bangkit.geniusaidapp.ui.screen.Result
+import com.bangkit.geniusaidapp.ui.screen.login.LoginUserViewModel
 
 
 @Composable
 fun DetailProfileBansos(
-    Id: Long,
+    name :String,
     context: Context,
-    viewModel: DetailBansosViewModel = viewModel(
+
+    navController: NavHostController
+) {
+
+    val viewModel: DetailBansosViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository(context)
         )
-    ),
-    navController: NavHostController
-) {
-    viewModel.result.collectAsState(initial = Result.Loading).value.let { uiStateCrew ->
-        when (uiStateCrew) {
-            is Result.Loading -> {
-                viewModel.getProfileBansosById(Id)
-            }
+    )
 
-            is Result.Success -> {
-                ContentDetailProfileBansos(profileBansos = uiStateCrew.data, modifier = Modifier, navController = navController)
-            }
+    var bansosState by remember { mutableStateOf<List<ProfileBansos>>(emptyList()) }
 
-            is Result.Error -> {}
-        }
+    LaunchedEffect(name) {
+        // Menggunakan viewModel untuk mendapatkan data produk berdasarkan ID
+        bansosState = viewModel.getBansosById(name)
     }
+
+    bansosState.forEach { selectedBansos ->
+        ContentDetailProfileBansos(
+            context = context,
+            modifier = Modifier,
+            navController = navController,
+            logoUrl = selectedBansos.logoUrl,
+            description = selectedBansos.description,
+            alias = selectedBansos.alias
+        )
+    }
+
 }
 
 @Composable
 fun ContentDetailProfileBansos(
+    context: Context,
     modifier: Modifier,
     navController: NavHostController,
-    profileBansos : ProfileBansos
-) {
+    viewModel: LoginUserViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository(context = context )),
+    ),
+    logoUrl : String,
+    description : String,
+    alias : String,
+
+    ) {
 
     Column {
         Row(
@@ -116,7 +137,7 @@ fun ContentDetailProfileBansos(
                     border = BorderStroke(0.5.dp, Color.LightGray)
                 ) {
                     AsyncImage(
-                        model = profileBansos.photoUrl,
+                        model = logoUrl,
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = modifier
@@ -128,7 +149,7 @@ fun ContentDetailProfileBansos(
 
 //
                 Text(
-                    text = profileBansos.name,
+                    text = alias,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     modifier = modifier
@@ -136,7 +157,7 @@ fun ContentDetailProfileBansos(
                 )
                 Divider()
                 Text(
-                    text = profileBansos.description,
+                    text = description,
                     modifier = Modifier.padding(bottom = 16.dp),
                     fontSize = 16.sp,
                     textAlign = TextAlign.Justify

@@ -221,16 +221,6 @@ fun LoginUserPage(
 
             Button(
                 onClick = {
-//                nanti disini akan membuat pengecekan login
-//                    navController.navigate(Screen.Home.route)
-//                    if(viewModel.isValidCredentials(nik, namaIbu, ttl)){
-//                        val intent = Intent(context, MainActivity::class.java)
-//                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                        context.startActivity(intent)
-//                        Utils.setLoginStatus(context, true)
-//                        Toast.makeText(context,"berhasil", Toast.LENGTH_SHORT).show()
-//                    }else  Toast.makeText(context,"gagal", Toast.LENGTH_SHORT).show()
-
                     if (viewModel.isValidCredentials(nik, namaIbu, ttl)) {
                         Log.d("LoginDebug", "NIK: $nik, Mother Name: $namaIbu, Birth Date: $ttl")
                         viewModel.login(nik, namaIbu, ttl)
@@ -257,6 +247,7 @@ fun LoginUserPage(
                     context.startActivity(intent)
                     Utils.setLoginStatus(context, true)
                     Toast.makeText(context, "Berhasil login", Toast.LENGTH_SHORT).show()
+                    loginResponse.result.token
                 }
             }
 
