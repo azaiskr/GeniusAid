@@ -19,4 +19,7 @@
     <color name="whiteBlue">#D0E1E9</color>
     <color name="whiteBlueLight">#E6F1F6</color>
     <color name="red">#FF0000</color>
+    <color name="fontblue">#5D35FF</color>
+
+
 </resources>
