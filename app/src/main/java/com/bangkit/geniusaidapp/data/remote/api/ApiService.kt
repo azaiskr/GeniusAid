@@ -1,18 +1,14 @@
 package com.bangkit.geniusaidapp.data.remote.api
-
-import com.bangkit.geniusaidapp.data.remote.response.ListBansosResponse
-import com.bangkit.geniusaidapp.data.remote.response.LoginResult
+import com.bangkit.geniusaidapp.data.remote.response.BansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.LoginUserResponse
-import com.bangkit.geniusaidapp.data.remote.response.Payload
-import com.bangkit.geniusaidapp.data.remote.response.Result
+import com.bangkit.geniusaidapp.data.remote.response.QuostionResponse
+import com.bangkit.geniusaidapp.data.remote.response.ResultBansosItem
 import com.bangkit.geniusaidapp.data.remote.response.StatusBansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.UserProfileResponse
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -29,10 +25,18 @@ interface ApiService {
 
     @GET("bansos")
     suspend fun getListBansos(
-    ): ListBansosResponse
+    ): BansosResponse
 
     @GET("submission/latest_status")
     suspend fun getStatusName(
     ): StatusBansosResponse
+
+    @GET("questioner") // Replace with your actual endpoint
+    suspend fun getQuestions(
+    ): QuostionResponse
+
+    @GET("bansos/{providerId}")
+    suspend fun getBansosById(@Path("providerId") providerId: Int): ResultBansosItem
+
 
 }

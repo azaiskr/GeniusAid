@@ -1,25 +1,18 @@
 package com.bangkit.geniusaidapp.data.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.bangkit.geniusaidapp.data.preference.UserPreferences
 import com.bangkit.geniusaidapp.data.remote.api.ApiService
-import com.bangkit.geniusaidapp.data.remote.response.ListBansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.LoginResult
 import com.bangkit.geniusaidapp.data.remote.response.LoginUserResponse
-import com.bangkit.geniusaidapp.data.remote.response.Payload
-import com.bangkit.geniusaidapp.data.remote.response.Result
-import com.bangkit.geniusaidapp.data.remote.response.ResultItemBansos
+import com.bangkit.geniusaidapp.data.remote.response.QuostionResponse
+import com.bangkit.geniusaidapp.data.remote.response.ResultBansosItem
 import com.bangkit.geniusaidapp.data.remote.response.StatusBansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.StatusListItem
 import com.bangkit.geniusaidapp.data.remote.response.UserProfileResponse
-import com.bangkit.geniusaidapp.model.ProfileBansos
+import com.bangkit.geniusaidapp.model.ProfileBansosList
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withContext
-import retrofit2.Call
 
 class GeniusRepository (
     private val apiService: ApiService,
@@ -75,7 +68,7 @@ class GeniusRepository (
 
 
     /////Profile Bansos
-    suspend fun getAllProfBansos(): List<ProfileBansos> {
+    suspend fun getAllProfBansos(): List<ProfileBansosList> {
         return try {
             val response = apiService.getListBansos()
             response.result?.mapNotNull { it?.toItemBansos() } ?: emptyList()
@@ -85,8 +78,21 @@ class GeniusRepository (
         }
     }
 
-    suspend fun getPrfileBansosName(bansosName: String): List<ProfileBansos> {
-        return getAllProfBansos().filter { it.name == bansosName }
+    suspend fun getPrfileBansosName(bansosId: Int): List<ProfileBansosList> {
+        return getAllProfBansos().filter { it.bansosProviderId == bansosId }
+    }
+
+
+
+
+    ///////Question
+    suspend fun getQuestions(): QuostionResponse {
+        return apiService.getQuestions()
+    }
+
+    /// halaman pengajuan
+    suspend fun getBansosData(): List<ResultBansosItem?>? {
+        return apiService.getListBansos().result
     }
 
     companion object {

@@ -4,11 +4,26 @@ sealed class Screen(val route: String) {
 
     //    Main
     object Home : Screen("home")
-    object DetailProfileBansos : Screen("home/{name}") {
-        fun createRoute(name: String) = "home/$name"
+    object DetailProfileBansos : Screen("home/{id}") {
+        fun createRoute(id: Int) = "home/$id"
     }
+
+    //////////
     object Pengajuan : Screen("pengajuan")
+    object Question : Screen("pengajuan/{id}") {
+        fun createRoute(id: Int) = "pengajuan/$id"
+    }
+
+
+
+
+
     object Profile : Screen("profile")
+
+
+
+
+
 
 //    Login
     object LoginUser : Screen("loginuser")
@@ -18,9 +33,7 @@ sealed class Screen(val route: String) {
 
     object HasilStatusBansos : Screen("hasilcekbansos")
 
-    object AskPengajuan : Screen("pengajuan/{Id}") {
-        fun createRoute(Id: Long) = "pengajuan/$Id"
-    }
+
 
     object Menu : Screen("menu/{Id}") {
         fun createRoute(Id: Long) = "pengajuan/$Id"

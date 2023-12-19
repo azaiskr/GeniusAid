@@ -20,7 +20,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,17 +38,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.bangkit.geniusaidapp.data.di.Injection
-import com.bangkit.geniusaidapp.model.ProfileBansos
+import com.bangkit.geniusaidapp.model.ProfileBansosList
 import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
-import com.bangkit.geniusaidapp.ui.screen.Result
 import com.bangkit.geniusaidapp.ui.screen.login.LoginUserViewModel
 
 
 @Composable
 fun DetailProfileBansos(
-    name :String,
+    BansosId: Int,
     context: Context,
-
     navController: NavHostController
 ) {
 
@@ -59,11 +56,11 @@ fun DetailProfileBansos(
         )
     )
 
-    var bansosState by remember { mutableStateOf<List<ProfileBansos>>(emptyList()) }
+    var bansosState by remember { mutableStateOf<List<ProfileBansosList>>(emptyList()) }
 
-    LaunchedEffect(name) {
+    LaunchedEffect(BansosId) {
         // Menggunakan viewModel untuk mendapatkan data produk berdasarkan ID
-        bansosState = viewModel.getBansosById(name)
+        bansosState = viewModel.getBansosById(BansosId)
     }
 
     bansosState.forEach { selectedBansos ->

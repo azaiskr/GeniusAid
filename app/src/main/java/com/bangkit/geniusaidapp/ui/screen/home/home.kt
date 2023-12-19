@@ -35,7 +35,7 @@ import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
 @Composable
 fun ContentHome(
     context: Context,
-    navigateToDetailBansos: (String) -> Unit,
+    navigateToDetailBansos: (Int) -> Unit,
     navController: NavHostController,
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(Injection.provideRepository(context = context )),
@@ -98,8 +98,9 @@ fun ContentHome(
             ) {
                 groupedBansos.forEach { (init, data) ->
 
-                    items(data, key = { it.name }) { data ->
+                    items(data, key = { it.bansosProviderId }) { data ->
                         ItemProfileBansos(
+                            id = data.bansosProviderId,
                             name = data.name,
                             photo = data.logoUrl,
                             navigateToDetail = navigateToDetailBansos

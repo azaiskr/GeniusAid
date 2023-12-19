@@ -1,18 +1,21 @@
 package com.bangkit.geniusaidapp.data.remote.response
 
-import com.bangkit.geniusaidapp.model.ProfileBansos
+import com.bangkit.geniusaidapp.model.ProfileBansosList
 import com.google.gson.annotations.SerializedName
 
-data class ListBansosResponse(
+data class BansosResponse(
 
 	@field:SerializedName("result")
-	val result: List<ResultItemBansos?>? = null,
+	val result: List<ResultBansosItem?>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null
 )
 
-data class ResultItemBansos(
+data class ResultBansosItem(
+
+	@field:SerializedName("bansos_provider_id")
+	val bansosProviderId: Int? = null,
 
 	@field:SerializedName("logo_url")
 	val logoUrl: String? = null,
@@ -32,16 +35,15 @@ data class ResultItemBansos(
 	@field:SerializedName("total_periode")
 	val totalPeriode: Int? = null
 ){
-	fun toItemBansos(): ProfileBansos {
-		return ProfileBansos(
+	fun toItemBansos(): ProfileBansosList {
+		return ProfileBansosList(
+			bansosProviderId = bansosProviderId ?: 0,
 			logoUrl = logoUrl ?: "",
 			name = name ?: "",
 			description = description ?: "",
 			alias = alias ?: "",
 			totalPenerima = totalPenerima ?: 0,
-			totalPeriode  = totalPeriode ?: 0
+			totalPeriode  = totalPeriode ?: 0,
 		)
 	}
 }
-
-
