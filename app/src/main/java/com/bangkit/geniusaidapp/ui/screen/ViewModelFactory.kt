@@ -7,7 +7,9 @@ import com.bangkit.geniusaidapp.ui.screen.hasilstatusbansos.HasilStatusBansosVie
 import com.bangkit.geniusaidapp.ui.screen.detailprofilebansos.DetailBansosViewModel
 import com.bangkit.geniusaidapp.ui.screen.home.HomeViewModel
 import com.bangkit.geniusaidapp.ui.screen.login.LoginUserViewModel
+import com.bangkit.geniusaidapp.ui.screen.pengajuan.PengajuanViewModel
 import com.bangkit.geniusaidapp.ui.screen.profile.ProfileViewModel
+import com.bangkit.geniusaidapp.ui.screen.question.QuestionViewModel
 
 class ViewModelFactory(private val repository: GeniusRepository) : ViewModelProvider.NewInstanceFactory(){
 
@@ -21,8 +23,12 @@ class ViewModelFactory(private val repository: GeniusRepository) : ViewModelProv
             return HasilStatusBansosViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(repository) as T
-        }else if (modelClass.isAssignableFrom(LoginUserViewModel::class.java)) {
+        } else if (modelClass.isAssignableFrom(LoginUserViewModel::class.java)) {
             return LoginUserViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(PengajuanViewModel::class.java)) {
+            return PengajuanViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(QuestionViewModel::class.java)) {
+            return QuestionViewModel(repository) as T
         }
 
 //        if (modelClass.isAssignableFrom(LoginUserViewModel::class.java)) {

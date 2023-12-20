@@ -1,6 +1,8 @@
 package com.bangkit.geniusaidapp.model
 
-data class ProfileBansos(
+
+data class ProfileBansosList(
+    val bansosProviderId: Int,
     val logoUrl: String,
     val name: String,
     val description: String,
@@ -8,4 +10,3 @@ data class ProfileBansos(
     val totalPenerima: Int,
     val totalPeriode: Int,
 )
-

@@ -24,9 +24,9 @@ import com.bangkit.geniusaidapp.navigation.Screen
 import com.bangkit.geniusaidapp.ui.component.BottomBar
 import com.bangkit.geniusaidapp.ui.screen.detailprofilebansos.DetailProfileBansos
 import com.bangkit.geniusaidapp.ui.screen.home.ContentHome
-import com.bangkit.geniusaidapp.ui.screen.pengajuan.AskPengajuan
 import com.bangkit.geniusaidapp.ui.screen.pengajuan.ContentPengajuan
 import com.bangkit.geniusaidapp.ui.screen.profile.ContentProfile
+import com.bangkit.geniusaidapp.ui.screen.question.Question
 import com.bangkit.geniusaidapp.ui.screen.statusbansos.ContentHasilStatusBansos
 
 
@@ -53,7 +53,7 @@ fun GeniusAidApp(
     } else {
         Scaffold(
             bottomBar = {
-                if (currentRoute != Screen.AskPengajuan.route && currentRoute != Screen.HasilStatusBansos.route
+                if (currentRoute != Screen.Question.route && currentRoute != Screen.HasilStatusBansos.route
                     && currentRoute != Screen.DetailProfileBansos.route ) {
                     BottomBar(navController)
                 }
@@ -69,8 +69,8 @@ fun GeniusAidApp(
                 composable(Screen.Home.route) {
                     ContentHome(
                         context = context,
-                        navigateToDetailBansos = { name ->
-                            navController.navigate(Screen.DetailProfileBansos.createRoute(name))
+                        navigateToDetailBansos = { id ->
+                            navController.navigate(Screen.DetailProfileBansos.createRoute(id))
                         },
                         navController = navController,
                     )
@@ -80,23 +80,35 @@ fun GeniusAidApp(
                 composable(
                     route = Screen.DetailProfileBansos.route,
                     arguments = listOf(
-                        navArgument("name") { type = NavType.StringType }
+                        navArgument("id") { type = NavType.IntType }
                     )
                 ) {
-                    val name = it.arguments?.getString("name") ?: ""
+                    val id = it.arguments?.getInt("id") ?: 1
 
-                    DetailProfileBansos(name = name, navController = navController, context = context)
+                    DetailProfileBansos(BansosId = id, navController = navController, context = context)
                 }
                 composable(Screen.HasilStatusBansos.route) {
                     ContentHasilStatusBansos(navController, context)
 
                 }
                 composable(Screen.Pengajuan.route) {
-                    ContentPengajuan(navController)
+                    ContentPengajuan(
+                        context = context,
+                        navigateToQuestion = { id ->
+                            navController.navigate(Screen.Question.createRoute(id))
+                        },
+                        navController = navController,
+                    )
 
                 }
-                composable(Screen.AskPengajuan.route) {
-                    AskPengajuan(navController)
+                composable(
+                    route = Screen.Question.route,
+                    arguments = listOf(
+                        navArgument("id") { type = NavType.IntType }
+                    )
+                ) {
+                    val id = it.arguments?.getInt("id") ?: 1
+                    Question(Id = id, navController = navController, context = context)
 
                 }
                 composable(Screen.Profile.route) {
