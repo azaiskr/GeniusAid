@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import com.bangkit.geniusaidapp.R
 import com.bangkit.geniusaidapp.data.di.Injection
 import com.bangkit.geniusaidapp.ui.component.BtnCekBansos
+import com.bangkit.geniusaidapp.ui.component.BtnCoba
 import com.bangkit.geniusaidapp.ui.component.ItemProfileBansos
 import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
 
@@ -117,7 +118,17 @@ fun ContentHome(
             .padding(8.dp, 8.dp, 20.dp, 8.dp)){
 
             BtnCekBansos(navController)
+
         }
+
+//        Box (modifier = Modifier
+//            .align(Alignment.BottomStart)
+//            .padding(8.dp, 8.dp, 20.dp, 8.dp)){
+//
+//            BtnCoba(navController)
+//
+//        }
+
     }
 
 }

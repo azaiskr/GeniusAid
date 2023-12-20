@@ -74,7 +74,7 @@ fun ContentProfile(navHostController: NavHostController, context : Context){
             horizontalAlignment = Alignment.CenterHorizontally
         ){
 
-            ImageAdd(viewModel)
+            ImageAdd(viewModel = viewModel, context = context)
             Info(navController = navHostController, viewModel = viewModel)
             Email(navController = navHostController, viewModel = viewModel)
             NoTlp(navController = navHostController, viewModel = viewModel)

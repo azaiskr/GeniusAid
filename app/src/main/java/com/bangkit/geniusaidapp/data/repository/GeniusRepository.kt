@@ -3,9 +3,11 @@ package com.bangkit.geniusaidapp.data.repository
 import android.util.Log
 import com.bangkit.geniusaidapp.data.preference.UserPreferences
 import com.bangkit.geniusaidapp.data.remote.api.ApiService
+import com.bangkit.geniusaidapp.data.remote.response.BansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.LoginResult
 import com.bangkit.geniusaidapp.data.remote.response.LoginUserResponse
-import com.bangkit.geniusaidapp.data.remote.response.QuostionResponse
+import com.bangkit.geniusaidapp.data.remote.response.PostSubmissionResponse
+import com.bangkit.geniusaidapp.data.remote.response.QuestionResponse
 import com.bangkit.geniusaidapp.data.remote.response.ResultBansosItem
 import com.bangkit.geniusaidapp.data.remote.response.StatusBansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.StatusListItem
@@ -13,6 +15,7 @@ import com.bangkit.geniusaidapp.data.remote.response.UserProfileResponse
 import com.bangkit.geniusaidapp.model.ProfileBansosList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 class GeniusRepository (
     private val apiService: ApiService,
@@ -86,7 +89,7 @@ class GeniusRepository (
 
 
     ///////Question
-    suspend fun getQuestions(): QuostionResponse {
+    suspend fun getQuestions(): QuestionResponse {
         return apiService.getQuestions()
     }
 
@@ -94,6 +97,32 @@ class GeniusRepository (
     suspend fun getBansosData(): List<ResultBansosItem?>? {
         return apiService.getListBansos().result
     }
+
+    //////coba
+
+//    suspend fun getBansos(): BansosResponse {
+//        try {
+//            return apiService.getBansos()
+//        } catch (e: HttpException) {
+//            throw e
+//        }
+//    }
+//
+//    suspend fun postSubmission(bansosId: Int): PostSubmissionResponse {
+//        try {
+//            return apiService.postSubmission(bansosId)
+//        } catch (e: HttpException) {
+//            throw e
+//        }
+//    }
+//
+//    suspend fun getQuestioner(): QuestionResponse {
+//        try {
+//            return apiService.getQuestioner()
+//        } catch (e: HttpException) {
+//            throw e
+//        }
+//    }
 
     companion object {
         @Volatile

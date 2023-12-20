@@ -30,6 +30,9 @@ class ViewModelFactory(private val repository: GeniusRepository) : ViewModelProv
         } else if (modelClass.isAssignableFrom(QuestionViewModel::class.java)) {
             return QuestionViewModel(repository) as T
         }
+//        else if (modelClass.isAssignableFrom(CobaViewModel::class.java)) {
+//            return CobaViewModel(repository) as T
+//        }
 
 //        if (modelClass.isAssignableFrom(LoginUserViewModel::class.java)) {
 //            return LoginUserViewModel(repository) as T

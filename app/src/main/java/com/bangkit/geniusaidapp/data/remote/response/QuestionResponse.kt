@@ -2,7 +2,7 @@ package com.bangkit.geniusaidapp.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class QuostionResponse(
+data class QuestionResponse(
 
 	@field:SerializedName("result")
 	val result: List<ResultItem?>? = null,
