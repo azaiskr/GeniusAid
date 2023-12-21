@@ -26,6 +26,8 @@ import com.bangkit.geniusaidapp.ui.screen.detailprofilebansos.DetailProfileBanso
 import com.bangkit.geniusaidapp.ui.screen.home.ContentHome
 import com.bangkit.geniusaidapp.ui.screen.pengajuan.ContentPengajuan
 import com.bangkit.geniusaidapp.ui.screen.profile.ContentProfile
+import com.bangkit.geniusaidapp.ui.screen.profile.edit.EditEmailScreen
+import com.bangkit.geniusaidapp.ui.screen.profile.edit.EditPhoneNumberScreen
 import com.bangkit.geniusaidapp.ui.screen.question.Question
 import com.bangkit.geniusaidapp.ui.screen.statusbansos.ContentHasilStatusBansos
 
@@ -54,7 +56,7 @@ fun GeniusAidApp(
         Scaffold(
             bottomBar = {
                 if (currentRoute != Screen.Question.route && currentRoute != Screen.HasilStatusBansos.route
-                    && currentRoute != Screen.DetailProfileBansos.route ) {
+                    && currentRoute != Screen.DetailProfileBansos.route && currentRoute != Screen.EditEmail.route && currentRoute != Screen.EditPhoneNumber.route  ) {
                     BottomBar(navController)
                 }
             },
@@ -114,16 +116,14 @@ fun GeniusAidApp(
                 composable(Screen.Profile.route) {
                     ContentProfile(navController, context)
                 }
-//                composable(Screen.Coba.route) {
-//                    CobaScreen(context, navController)
-//                }
-//
-//                composable("bansos") { BansosScreen(context, navController) }
-//                composable("submission/{bansosId}", arguments = listOf(navArgument("bansosId") { type = NavType.IntType })) { backStackEntry ->
-//                    val bansosId = backStackEntry.arguments?.getInt("bansosId") ?: 0
-//                    SubmissionScreen(context,navController, bansosId)
-//                }
-//                composable("questioner") { QuestionerScreen(context) }
+
+                composable(Screen.EditPhoneNumber.route) {
+                    EditPhoneNumberScreen(context = context, navController = navController)
+                }
+                composable(Screen.EditEmail.route) {
+                    EditEmailScreen(context = context, navController = navController)
+                }
+
 
             }
 

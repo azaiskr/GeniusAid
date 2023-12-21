@@ -53,6 +53,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.bangkit.geniusaidapp.data.di.Injection
+import com.bangkit.geniusaidapp.navigation.Screen
 import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
 import com.bangkit.geniusaidapp.ui.screen.profile.ProfileViewModel
 import java.io.File
@@ -295,7 +296,9 @@ fun Email(
                         overflow = TextOverflow.Ellipsis
                     )
 
-                    IconButton(onClick = { } ) {
+                    IconButton(onClick = {
+                        navController.navigate(Screen.EditEmail.route)
+                    } ) {
                         Icon(
                             imageVector = Icons.Outlined.Edit,
                             contentDescription = null,
@@ -356,7 +359,10 @@ fun NoTlp(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                IconButton(onClick = { } ) {
+                IconButton(onClick = {
+                    navController.navigate(Screen.EditPhoneNumber.route)
+
+                } ) {
                     Icon(
                         imageVector = Icons.Outlined.Edit,
                         contentDescription = null,

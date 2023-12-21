@@ -93,6 +93,7 @@ fun ContentHome(
             )
 
 
+
             LazyColumn(modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 5.dp, end = 5.dp)
@@ -121,13 +122,7 @@ fun ContentHome(
 
         }
 
-//        Box (modifier = Modifier
-//            .align(Alignment.BottomStart)
-//            .padding(8.dp, 8.dp, 20.dp, 8.dp)){
-//
-//            BtnCoba(navController)
-//
-//        }
+
 
     }
 

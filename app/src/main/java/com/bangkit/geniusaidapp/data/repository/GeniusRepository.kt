@@ -7,6 +7,9 @@ import com.bangkit.geniusaidapp.data.remote.response.BansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.LoginResult
 import com.bangkit.geniusaidapp.data.remote.response.LoginUserResponse
 import com.bangkit.geniusaidapp.data.remote.response.PostSubmissionResponse
+import com.bangkit.geniusaidapp.data.remote.response.PutResult
+import com.bangkit.geniusaidapp.data.remote.response.PutUserProfileRequest
+import com.bangkit.geniusaidapp.data.remote.response.PutUserProfileResponse
 import com.bangkit.geniusaidapp.data.remote.response.QuestionResponse
 import com.bangkit.geniusaidapp.data.remote.response.ResultBansosItem
 import com.bangkit.geniusaidapp.data.remote.response.StatusBansosResponse
@@ -16,6 +19,7 @@ import com.bangkit.geniusaidapp.model.ProfileBansosList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import com.bangkit.geniusaidapp.ui.screen.Result
 
 class GeniusRepository (
     private val apiService: ApiService,
@@ -42,6 +46,10 @@ class GeniusRepository (
     ///////Untuk Get Data User
     suspend fun getUserProfile(): UserProfileResponse {
         return apiService.getUserProfile()
+    }
+
+    suspend fun updateProfile(profile: PutUserProfileRequest): PutUserProfileResponse {
+        return apiService.updateProfile(profile)
     }
 
 
@@ -81,6 +89,7 @@ class GeniusRepository (
         }
     }
 
+    /////Bru Put
     suspend fun getPrfileBansosName(bansosId: Int): List<ProfileBansosList> {
         return getAllProfBansos().filter { it.bansosProviderId == bansosId }
     }
@@ -100,29 +109,32 @@ class GeniusRepository (
 
     //////coba
 
-//    suspend fun getBansos(): BansosResponse {
-//        try {
-//            return apiService.getBansos()
-//        } catch (e: HttpException) {
-//            throw e
-//        }
-//    }
-//
-//    suspend fun postSubmission(bansosId: Int): PostSubmissionResponse {
-//        try {
-//            return apiService.postSubmission(bansosId)
-//        } catch (e: HttpException) {
-//            throw e
-//        }
-//    }
-//
-//    suspend fun getQuestioner(): QuestionResponse {
-//        try {
-//            return apiService.getQuestioner()
-//        } catch (e: HttpException) {
-//            throw e
-//        }
-//    }
+    suspend fun getBansos(): BansosResponse {
+        try {
+            return apiService.getBansos()
+        } catch (e: HttpException) {
+            throw e
+        }
+    }
+
+    suspend fun postSubmission(bansosId: Int): PostSubmissionResponse {
+        try {
+            return apiService.postSubmission(bansosId)
+        } catch (e: HttpException) {
+            throw e
+        }
+    }
+
+    suspend fun getQuestioner(): QuestionResponse {
+        try {
+            return apiService.getQuestioner()
+        } catch (e: HttpException) {
+            throw e
+        }
+    }
+
+
+
 
     companion object {
         @Volatile

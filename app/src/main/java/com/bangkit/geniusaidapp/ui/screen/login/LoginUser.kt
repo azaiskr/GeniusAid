@@ -51,42 +51,12 @@ import com.bangkit.geniusaidapp.ui.screen.home.HomeViewModel
 import com.bangkit.geniusaidapp.ui.utils.Utils
 
 
-//@Composable
-//fun LoginUser(
-//    context: Context,
-//    viewModel: LoginUserViewModel = viewModel(
-//        factory = ViewModelFactory(Injection.provideRepository(context = context )),
-//    ),
-//    navController: NavHostController,
-////    navigateToHome: (Long) -> Unit,
-//) {
-//    viewModel.result.collectAsState(initial = Result.Loading).value.let { uiState ->
-//        when (uiState) {
-//            is Result.Loading -> {
-//                viewModel.getLogin()
-//            }
-//
-//            is Result.Success -> {
-//                LoginUserPage(
-//                    uiState.data,
-////                    navigateToHome = navigateToHome,
-//                    navController = navController,
-//                    context = context,
-//                    viewModel = viewModel
-//                )
-//            }
-//
-//            is Result.Error -> {}
-//        }
-//    }
-//}
 
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginUserPage(
-//    item: List<Payload>,
     navController: NavHostController,
     context: Context,
     viewModel: LoginUserViewModel = viewModel(

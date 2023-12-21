@@ -9,6 +9,7 @@ import com.bangkit.geniusaidapp.ui.screen.home.HomeViewModel
 import com.bangkit.geniusaidapp.ui.screen.login.LoginUserViewModel
 import com.bangkit.geniusaidapp.ui.screen.pengajuan.PengajuanViewModel
 import com.bangkit.geniusaidapp.ui.screen.profile.ProfileViewModel
+import com.bangkit.geniusaidapp.ui.screen.profile.edit.EditViewModel
 import com.bangkit.geniusaidapp.ui.screen.question.QuestionViewModel
 
 class ViewModelFactory(private val repository: GeniusRepository) : ViewModelProvider.NewInstanceFactory(){
@@ -30,9 +31,9 @@ class ViewModelFactory(private val repository: GeniusRepository) : ViewModelProv
         } else if (modelClass.isAssignableFrom(QuestionViewModel::class.java)) {
             return QuestionViewModel(repository) as T
         }
-//        else if (modelClass.isAssignableFrom(CobaViewModel::class.java)) {
-//            return CobaViewModel(repository) as T
-//        }
+        else if (modelClass.isAssignableFrom(EditViewModel::class.java)) {
+            return EditViewModel(repository) as T
+        }
 
 //        if (modelClass.isAssignableFrom(LoginUserViewModel::class.java)) {
 //            return LoginUserViewModel(repository) as T

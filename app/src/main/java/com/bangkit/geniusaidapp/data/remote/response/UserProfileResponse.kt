@@ -9,7 +9,11 @@ data class UserProfileResponse(
 
 	@field:SerializedName("message")
 	val message: String? = null
-)
+) {
+	fun copyWithUpdatedResult(result: Result? = this.result, message: String? = this.message): UserProfileResponse {
+		return copy(result = result, message = message)
+	}
+}
 
 data class Result(
 
