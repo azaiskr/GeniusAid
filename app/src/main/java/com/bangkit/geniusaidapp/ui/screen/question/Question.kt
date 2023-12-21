@@ -234,7 +234,11 @@ fun QuestionItem(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(text = resultItem.question ?: "", style = MaterialTheme.typography.titleMedium, color = navy)
+            Text(
+                text = resultItem.question ?: "",
+                style = MaterialTheme.typography.titleMedium,
+                color = navy
+            )
 
 
             Spacer(modifier = Modifier.height(20.dp))

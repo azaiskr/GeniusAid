@@ -1,19 +1,14 @@
 package com.bangkit.geniusaidapp.ui.screen.pengajuan
 
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bangkit.geniusaidapp.data.remote.response.QuostionResponse
 import com.bangkit.geniusaidapp.data.remote.response.ResultBansosItem
 import com.bangkit.geniusaidapp.data.repository.GeniusRepository
 import com.bangkit.geniusaidapp.model.ProfileBansosList
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class PengajuanViewModel(private val repository: GeniusRepository) : ViewModel() {
 

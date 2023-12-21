@@ -1,7 +1,8 @@
 package com.bangkit.geniusaidapp.data.remote.api
 import com.bangkit.geniusaidapp.data.remote.response.BansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.LoginUserResponse
-import com.bangkit.geniusaidapp.data.remote.response.QuostionResponse
+import com.bangkit.geniusaidapp.data.remote.response.PostSubmissionResponse
+import com.bangkit.geniusaidapp.data.remote.response.QuestionResponse
 import com.bangkit.geniusaidapp.data.remote.response.ResultBansosItem
 import com.bangkit.geniusaidapp.data.remote.response.StatusBansosResponse
 import com.bangkit.geniusaidapp.data.remote.response.UserProfileResponse
@@ -33,10 +34,21 @@ interface ApiService {
 
     @GET("questioner") // Replace with your actual endpoint
     suspend fun getQuestions(
-    ): QuostionResponse
+    ): QuestionResponse
 
     @GET("bansos/{providerId}")
     suspend fun getBansosById(@Path("providerId") providerId: Int): ResultBansosItem
 
 
+//
+//    @GET("bansos")
+//    suspend fun getBansos(): BansosResponse
+//
+//    @POST("submission")
+//    suspend fun postSubmission(
+//        @Query("bansos_id") bansosId: Int
+//    ): PostSubmissionResponse
+//
+//    @GET("questioner")
+//    suspend fun getQuestioner(): QuestionResponse
 }

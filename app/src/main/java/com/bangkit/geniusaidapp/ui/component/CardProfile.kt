@@ -1,5 +1,6 @@
 package com.bangkit.geniusaidapp.ui.component
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import com.bangkit.geniusaidapp.R
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
@@ -45,13 +47,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.core.content.FileProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.bangkit.geniusaidapp.data.di.Injection
+import com.bangkit.geniusaidapp.ui.screen.ViewModelFactory
 import com.bangkit.geniusaidapp.ui.screen.profile.ProfileViewModel
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Objects
+
+
 
 @Composable
 fun ImageAdd(
-    viewModel : ProfileViewModel
+    context : Context,
+    viewModel: ProfileViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository(context = context )),
+    )
 ) {
     Box {
 
@@ -66,6 +82,7 @@ fun ImageAdd(
                 bitmap.value = it
             }
         }
+
 
 
         Column (

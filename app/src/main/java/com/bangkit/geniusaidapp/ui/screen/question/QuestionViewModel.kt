@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bangkit.geniusaidapp.data.remote.response.QuostionResponse
+import com.bangkit.geniusaidapp.data.remote.response.QuestionResponse
 import com.bangkit.geniusaidapp.data.repository.GeniusRepository
 import com.bangkit.geniusaidapp.model.ProfileBansosList
 import com.bangkit.geniusaidapp.ui.screen.Result
@@ -28,8 +28,8 @@ class QuestionViewModel(private val repository: GeniusRepository) : ViewModel() 
 
 
     ////// halaman question
-    private val _questionResponse = mutableStateOf<QuostionResponse?>(null)
-    val questionResponse: State<QuostionResponse?> = _questionResponse
+    private val _questionResponse = mutableStateOf<QuestionResponse?>(null)
+    val questionResponse: State<QuestionResponse?> = _questionResponse
 
     fun getQuestions() {
         viewModelScope.launch {

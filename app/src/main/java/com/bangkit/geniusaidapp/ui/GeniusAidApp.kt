@@ -114,6 +114,16 @@ fun GeniusAidApp(
                 composable(Screen.Profile.route) {
                     ContentProfile(navController, context)
                 }
+//                composable(Screen.Coba.route) {
+//                    CobaScreen(context, navController)
+//                }
+//
+//                composable("bansos") { BansosScreen(context, navController) }
+//                composable("submission/{bansosId}", arguments = listOf(navArgument("bansosId") { type = NavType.IntType })) { backStackEntry ->
+//                    val bansosId = backStackEntry.arguments?.getInt("bansosId") ?: 0
+//                    SubmissionScreen(context,navController, bansosId)
+//                }
+//                composable("questioner") { QuestionerScreen(context) }
 
             }
 
